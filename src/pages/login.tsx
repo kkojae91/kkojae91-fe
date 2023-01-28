@@ -2,17 +2,22 @@ import type { NextPage } from 'next';
 import React from 'react';
 import styled from 'styled-components';
 
+import withLogin from '../components/helper/withLogin';
 import Input from '../components/Input';
 import useControlledForm from '../hooks/useControlledForm';
+import useSetAuthorization from '../hooks/useSetAuthorization';
 import { ValuesType } from '../types/login';
 import { loginValidator } from '../utilities/validate';
+import usePostLogin from '../hooks/queries/usePostLogin';
 
 const LoginPage: NextPage = () => {
+  const { setLoginInfo } = useSetAuthorization();
+  const { mutate: login } = usePostLogin({ setLoginInfo });
   const { errorMessages, handleSubmit, touched, getProps } = useControlledForm<ValuesType>({
     initialValues: { id: '', password: '' },
     validate: loginValidator,
     onSubmit: (values: ValuesType) => {
-      console.log(values);
+      login(values);
     },
   });
 
@@ -45,7 +50,7 @@ const LoginPage: NextPage = () => {
   );
 };
 
-export default LoginPage;
+export default withLogin(LoginPage, false);
 
 const Container = styled.form`
   display: flex;

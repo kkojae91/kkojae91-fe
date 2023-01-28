@@ -1,4 +1,6 @@
 import type { AppProps } from 'next/app';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { RecoilRoot } from 'recoil';
 import styled from 'styled-components';
 
 import setupMSW from '../api/setup';
@@ -7,16 +9,29 @@ import GlobalStyle from '../styles/GlobalStyle';
 
 setupMSW();
 
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+      refetchOnWindowFocus: false,
+    },
+  },
+});
+
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <GlobalStyle />
       <Background />
 
-      <Content>
-        <Header />
-        <Component {...pageProps} />
-      </Content>
+      <QueryClientProvider client={queryClient}>
+        <RecoilRoot>
+          <Content>
+            <Header />
+            <Component {...pageProps} />
+          </Content>
+        </RecoilRoot>
+      </QueryClientProvider>
     </>
   );
 }

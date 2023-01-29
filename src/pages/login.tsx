@@ -3,9 +3,9 @@ import React from 'react';
 import styled from 'styled-components';
 
 import withLogin from '../components/helper/withLogin';
-import Input from '../components/Input';
-import LoadingSpinner from '../components/LoadingSpinner';
-import ExceptionError from '../components/ExceptionError';
+import Input from '../components/common/Input';
+import LoadingSpinner from '../components/loading/LoadingSpinner';
+import ExceptionError from '../components/common/ExceptionError';
 import useControlledForm from '../hooks/useControlledForm';
 import useSetAuthorization from '../hooks/useSetAuthorization';
 import usePostLogin from '../hooks/queries/usePostLogin';

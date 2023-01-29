@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 
-import { GetPropsType } from '../types/login';
+import { GetPropsType } from '../../types/login';
 
 type InputProps = {
   id: string;

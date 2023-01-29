@@ -1,7 +1,7 @@
 import React from 'react';
 
 import ProductItemSkeleton from './ProductItemSkeleton';
-import { Container } from './ProductList';
+import { Container } from '../ProductList';
 
 const ProductListSkeleton = () => {
   return (

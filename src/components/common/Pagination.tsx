@@ -2,8 +2,8 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import { VscChevronLeft, VscChevronRight } from 'react-icons/vsc';
 
-import usePagination from '../hooks/usePagination';
-import { DEFAULT_PAGE_COUNT } from '../constants';
+import usePagination from '../../hooks/usePagination';
+import { DEFAULT_PAGE_COUNT } from '../../constants';
 
 type PaginationProps = {
   currentPage: number;

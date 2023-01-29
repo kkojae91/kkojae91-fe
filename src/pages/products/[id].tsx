@@ -3,8 +3,8 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import styled from 'styled-components';
 
-import ExceptionError from '../../components/ExceptionError';
-import ProductDetailSkeleton from '../../components/ProductDetailSkeleton';
+import ExceptionError from '../../components/common/ExceptionError';
+import ProductDetailSkeleton from '../../components/loading/ProductDetailSkeleton';
 import { ERROR_MESSAGES, REDIRECT_TEXT } from '../../constants/message';
 import { PATHS } from '../../constants/path';
 import useGetProductDetail from '../../hooks/queries/useGetProductDetail';

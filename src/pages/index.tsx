@@ -4,9 +4,9 @@ import React from 'react';
 import styled from 'styled-components';
 
 import ProductList from '../components/ProductList';
-import Pagination from '../components/Pagination';
-import ProductListSkeleton from '../components/ProductListSkeleton';
-import ExceptionError from '../components/ExceptionError';
+import Pagination from '../components/common/Pagination';
+import ProductListSkeleton from '../components/loading/ProductListSkeleton';
+import ExceptionError from '../components/common/ExceptionError';
 import useGetProducts from '../hooks/queries/useGetProducts';
 import { PATHS } from '../constants/path';
 import { ERROR_MESSAGES, REDIRECT_TEXT } from '../constants/message';

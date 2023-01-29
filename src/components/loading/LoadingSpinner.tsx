@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { loadingSpinnerAnimation } from '../styles/animation';
+import { loadingSpinnerAnimation } from '../../styles/animation';
 
 const LoadingSpinner = () => {
   return (

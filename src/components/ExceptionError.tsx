@@ -16,9 +16,9 @@ const ExceptionError = ({ title, description, buttonText, path }: ExceptionError
         <Description>{description}</Description>
       </Header>
 
-      <Button type='button'>
-        <Link href={path}>{buttonText}</Link>
-      </Button>
+      <Link href={path}>
+        <Button type='button'>{buttonText}</Button>
+      </Link>
     </Container>
   );
 };

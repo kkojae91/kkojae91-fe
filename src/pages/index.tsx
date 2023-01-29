@@ -5,10 +5,11 @@ import styled from 'styled-components';
 
 import ProductList from '../components/ProductList';
 import Pagination from '../components/Pagination';
-import useGetProducts from '../hooks/queries/useGetProducts';
 import ProductListSkeleton from '../components/ProductListSkeleton';
 import ExceptionError from '../components/ExceptionError';
+import useGetProducts from '../hooks/queries/useGetProducts';
 import { PATHS } from '../constants/path';
+import { ERROR_MESSAGES, REDIRECT_TEXT } from '../constants/message';
 
 const HomePage: NextPage = () => {
   const router = useRouter();
@@ -21,8 +22,8 @@ const HomePage: NextPage = () => {
   if (isError) {
     return (
       <ExceptionError
-        title='존재하지 않는 페이지입니다.'
-        description='홈으로 돌아가시려면 아래 버튼을 클릭해주세요.'
+        title={ERROR_MESSAGES.NOT_FOUND_PAGE}
+        description={REDIRECT_TEXT.TO_HOME}
         buttonText='홈으로 가기'
         path={PATHS.HOME}
       />

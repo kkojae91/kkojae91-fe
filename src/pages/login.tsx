@@ -12,6 +12,7 @@ import usePostLogin from '../hooks/queries/usePostLogin';
 import { ValuesType } from '../types/login';
 import { loginValidator } from '../utilities/validate';
 import { PATHS } from '../constants/path';
+import { ERROR_MESSAGES, REDIRECT_TEXT } from '../constants/message';
 
 const LoginPage: NextPage = () => {
   const { setLoginInfo } = useSetAuthorization();
@@ -27,8 +28,8 @@ const LoginPage: NextPage = () => {
   if (isError) {
     return (
       <ExceptionError
-        title='존재하지 않는 유저입니다.'
-        description='다시 로그인하시려면 아래 버튼을 클릭해주세요.'
+        title={ERROR_MESSAGES.NOT_FOUND_USER}
+        description={REDIRECT_TEXT.TO_LOGIN}
         buttonText='로그인 하러가기'
         path={PATHS.LOGIN}
       />

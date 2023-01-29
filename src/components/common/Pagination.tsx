@@ -35,10 +35,9 @@ const Pagination = ({ currentPage, totalPageCount }: PaginationProps) => {
           const isCurrentPage = pageNumber === currentPage;
 
           return (
-            <>
+            <React.Fragment key={index}>
               {totalPageCount >= pageNumber && (
                 <Page
-                  key={index}
                   type='button'
                   selected={isCurrentPage}
                   disabled={isCurrentPage}
@@ -49,7 +48,7 @@ const Pagination = ({ currentPage, totalPageCount }: PaginationProps) => {
               )}
 
               {totalPageCount < pageNumber && null}
-            </>
+            </React.Fragment>
           );
         })}
       </PageWrapper>

@@ -4,5 +4,7 @@ export const STORAGE_KEYS = {
 } as const;
 
 export const QUERY_KEY = {
-  POST_LOGIN: 'post-login',
+  POST_LOGIN: 'postLogin',
+  GET_PRODUCTS: 'getProducts',
+  GET_PRODUCT_DETAIL: 'getProductDetail',
 } as const;

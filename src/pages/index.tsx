@@ -10,6 +10,7 @@ import ExceptionError from '../components/common/ExceptionError';
 import useGetProducts from '../hooks/queries/useGetProducts';
 import { PATHS } from '../constants/path';
 import { ERROR_MESSAGES, REDIRECT_TEXT } from '../constants/message';
+import { COUNT } from '../constants';
 
 const HomePage: NextPage = () => {
   const router = useRouter();
@@ -37,7 +38,7 @@ const HomePage: NextPage = () => {
       <ProductList products={products ?? []} />
       <Pagination
         currentPage={Number(page ?? 1)}
-        totalPageCount={Math.ceil(Number(totalCount ?? 1) / 10)}
+        totalPageCount={Math.ceil(Number(totalCount ?? 1) / COUNT.DEFAULT_PRODUCT_COUNT)}
       />
     </Container>
   );

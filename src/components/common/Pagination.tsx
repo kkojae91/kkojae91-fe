@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import { VscChevronLeft, VscChevronRight } from 'react-icons/vsc';
 
 import usePagination from '../../hooks/usePagination';
-import { DEFAULT_PAGE_COUNT } from '../../constants';
+import { COUNT } from '../../constants';
 
 type PaginationProps = {
   currentPage: number;
@@ -30,7 +30,7 @@ const Pagination = ({ currentPage, totalPageCount }: PaginationProps) => {
       </Button>
 
       <PageWrapper>
-        {Array.from({ length: DEFAULT_PAGE_COUNT }).map((_, index) => {
+        {Array.from({ length: COUNT.DEFAULT_PAGE_COUNT }).map((_, index) => {
           const pageNumber = index + pageNumberOffset;
           const isCurrentPage = pageNumber === currentPage;
 

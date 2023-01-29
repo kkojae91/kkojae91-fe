@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { MouseEventHandler } from 'react';
 
-import { DEFAULT_PAGE_COUNT } from '../constants';
+import { COUNT } from '../constants';
 import { PARAMETERS } from '../constants/path';
 import { ceilBy5Unit, floorBy5Unit } from '../utilities';
 import { getPageNumberOffset } from '../utilities/pagination';
@@ -42,10 +42,10 @@ const usePagination = ({
 
   const pageNumberOffset = getPageNumberOffset({
     currentPage,
-    paginationLength: DEFAULT_PAGE_COUNT,
+    paginationLength: COUNT.DEFAULT_PAGE_COUNT,
   });
 
-  const isDisabledPreviousButton = ceilBy5Unit(currentPage) === DEFAULT_PAGE_COUNT;
+  const isDisabledPreviousButton = ceilBy5Unit(currentPage) === COUNT.DEFAULT_PAGE_COUNT;
 
   const isDisabledNextButton = ceilBy5Unit(currentPage) === ceilBy5Unit(totalPageCount);
 

@@ -1,6 +1,7 @@
 import { useQuery } from 'react-query';
 
 import { getProductDetail } from '../../api/products';
+import { QUERY_KEY } from '../../constants/key';
 import { ProductDetailResponse } from '../../types/product';
 
 type UseGetProductDetailParams = {
@@ -8,7 +9,7 @@ type UseGetProductDetailParams = {
 };
 
 const useGetProductDetail = ({ id }: UseGetProductDetailParams) => {
-  return useQuery<ProductDetailResponse>(['getProductDetail', id], getProductDetail(id));
+  return useQuery<ProductDetailResponse>([QUERY_KEY.GET_PRODUCT_DETAIL, id], getProductDetail(id));
 };
 
 export default useGetProductDetail;

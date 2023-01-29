@@ -9,10 +9,11 @@ import useSetAuthorization from '../hooks/useSetAuthorization';
 import { ValuesType } from '../types/login';
 import { loginValidator } from '../utilities/validate';
 import usePostLogin from '../hooks/queries/usePostLogin';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 const LoginPage: NextPage = () => {
   const { setLoginInfo } = useSetAuthorization();
-  const { mutate: login } = usePostLogin({ setLoginInfo });
+  const { mutate: login, isLoading } = usePostLogin({ setLoginInfo });
   const { errorMessages, handleSubmit, touched, getProps } = useControlledForm<ValuesType>({
     initialValues: { id: '', password: '' },
     validate: loginValidator,
@@ -22,37 +23,43 @@ const LoginPage: NextPage = () => {
   });
 
   return (
-    <Container onSubmit={handleSubmit}>
-      <InputContainer>
-        <Input
-          id='id'
-          type='text'
-          labelText='아이디'
-          isInvalid={touched.id && errorMessages.id.length !== 0}
-          errorMessage={errorMessages.id}
-          getProps={getProps}
-        />
+    <Container>
+      <Form onSubmit={handleSubmit}>
+        {isLoading && <LoadingSpinner />}
 
-        <Input
-          id='password'
-          type='password'
-          labelText='비밀번호'
-          isInvalid={touched.password && errorMessages.password.length !== 0}
-          errorMessage={errorMessages.password}
-          getProps={getProps}
-        />
-      </InputContainer>
+        <InputContainer>
+          <Input
+            id='id'
+            type='text'
+            labelText='아이디'
+            isInvalid={touched.id && errorMessages.id.length !== 0}
+            errorMessage={errorMessages.id}
+            getProps={getProps}
+          />
 
-      <LoginButton type='submit' disabled={Object.values(errorMessages).some((value) => value)}>
-        로그인
-      </LoginButton>
+          <Input
+            id='password'
+            type='password'
+            labelText='비밀번호'
+            isInvalid={touched.password && errorMessages.password.length !== 0}
+            errorMessage={errorMessages.password}
+            getProps={getProps}
+          />
+        </InputContainer>
+
+        <LoginButton type='submit' disabled={Object.values(errorMessages).some((value) => value)}>
+          로그인
+        </LoginButton>
+      </Form>
     </Container>
   );
 };
 
 export default withLogin(LoginPage, false);
 
-const Container = styled.form`
+const Container = styled.article``;
+
+const Form = styled.form`
   display: flex;
   flex-direction: column;
   margin-top: 40px;

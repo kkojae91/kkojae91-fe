@@ -16,7 +16,7 @@ const withLogin = (PageComponent: NextPage, isLoginRequired: boolean) => {
 
     router.push(PATHS.HOME);
 
-    return <p>잘못된 접근입니다.</p>;
+    return null;
   };
 
   return Component;

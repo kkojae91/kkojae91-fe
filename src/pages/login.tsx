@@ -4,16 +4,18 @@ import styled from 'styled-components';
 
 import withLogin from '../components/helper/withLogin';
 import Input from '../components/Input';
+import LoadingSpinner from '../components/LoadingSpinner';
+import ExceptionError from '../components/ExceptionError';
 import useControlledForm from '../hooks/useControlledForm';
 import useSetAuthorization from '../hooks/useSetAuthorization';
+import usePostLogin from '../hooks/queries/usePostLogin';
 import { ValuesType } from '../types/login';
 import { loginValidator } from '../utilities/validate';
-import usePostLogin from '../hooks/queries/usePostLogin';
-import LoadingSpinner from '../components/LoadingSpinner';
+import { PATHS } from '../constants/path';
 
 const LoginPage: NextPage = () => {
   const { setLoginInfo } = useSetAuthorization();
-  const { mutate: login, isLoading } = usePostLogin({ setLoginInfo });
+  const { mutate: login, isLoading, isError } = usePostLogin({ setLoginInfo });
   const { errorMessages, handleSubmit, touched, getProps } = useControlledForm<ValuesType>({
     initialValues: { id: '', password: '' },
     validate: loginValidator,
@@ -21,6 +23,17 @@ const LoginPage: NextPage = () => {
       login(values);
     },
   });
+
+  if (isError) {
+    return (
+      <ExceptionError
+        title='존재하지 않는 유저입니다.'
+        description='다시 로그인하시려면 아래 버튼을 클릭해주세요.'
+        buttonText='로그인 하러가기'
+        path={PATHS.LOGIN}
+      />
+    );
+  }
 
   return (
     <Container>

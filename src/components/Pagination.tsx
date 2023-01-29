@@ -1,21 +1,60 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { VscChevronLeft, VscChevronRight } from 'react-icons/vsc';
 
-const Pagination = () => {
+import usePagination from '../hooks/usePagination';
+import { DEFAULT_PAGE_COUNT } from '../constants';
+
+type PaginationProps = {
+  currentPage: number;
+  totalPageCount: number;
+};
+
+const Pagination = ({ currentPage, totalPageCount }: PaginationProps) => {
+  const {
+    pageNumberOffset,
+    isDisabledPreviousButton,
+    isDisabledNextButton,
+    handleMovePreviousPagination,
+    handleMoveNextPagination,
+    handleMoveTargetPage,
+  } = usePagination({
+    currentPage,
+    totalPageCount,
+  });
+
   return (
     <Container>
-      <Button disabled>
+      <Button disabled={isDisabledPreviousButton} onClick={handleMovePreviousPagination}>
         <VscChevronLeft />
       </Button>
+
       <PageWrapper>
-        {[1, 2, 3, 4, 5].map((page) => (
-          <Page key={page} selected={page === 1} disabled={page === 1}>
-            {page}
-          </Page>
-        ))}
+        {Array.from({ length: DEFAULT_PAGE_COUNT }).map((_, index) => {
+          const pageNumber = index + pageNumberOffset;
+          const isCurrentPage = pageNumber === currentPage;
+
+          return (
+            <>
+              {totalPageCount >= pageNumber && (
+                <Page
+                  key={index}
+                  type='button'
+                  selected={isCurrentPage}
+                  disabled={isCurrentPage}
+                  onClick={() => handleMoveTargetPage(pageNumber)}
+                >
+                  {pageNumber}
+                </Page>
+              )}
+
+              {totalPageCount < pageNumber && null}
+            </>
+          );
+        })}
       </PageWrapper>
-      <Button disabled={false}>
+
+      <Button disabled={isDisabledNextButton} onClick={handleMoveNextPagination}>
         <VscChevronRight />
       </Button>
     </Container>
@@ -52,9 +91,12 @@ type PageType = {
 
 const Page = styled.button<PageType>`
   padding: 4px 6px;
-  background-color: ${({ selected }) => (selected ? '#000' : 'transparent')};
-  color: ${({ selected }) => (selected ? '#fff' : '#000')};
   font-size: 20px;
+
+  ${({ selected }) => css`
+    background-color: ${selected ? '#000' : 'transparent'};
+    color: ${selected ? '#fff' : '#000'};
+  `}
 
   & + & {
     margin-left: 4px;

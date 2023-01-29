@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import styled from 'styled-components';
 
 type ExceptionErrorProps = {
@@ -16,9 +15,9 @@ const ExceptionError = ({ title, description, buttonText, path }: ExceptionError
         <Description>{description}</Description>
       </Header>
 
-      <Link href={path}>
+      <a href={path}>
         <Button type='button'>{buttonText}</Button>
-      </Link>
+      </a>
     </Container>
   );
 };

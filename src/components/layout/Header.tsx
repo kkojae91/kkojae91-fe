@@ -4,13 +4,18 @@ import { PATHS } from '../../constants/path';
 
 import useSetAuthorization from '../../hooks/useSetAuthorization';
 
-const Header = () => {
+type HeaderProps = {
+  isErrorBoundaryHeader?: boolean;
+};
+
+const Header = ({ isErrorBoundaryHeader = false }: HeaderProps) => {
   const { isLogin, userName, logout } = useSetAuthorization();
 
   return (
     <Container>
       <Title>
-        <Link href={PATHS.HOME}>HAUS</Link>
+        {isErrorBoundaryHeader && <a href={PATHS.HOME}>HAUS</a>}
+        {!isErrorBoundaryHeader && <Link href={PATHS.HOME}>HAUS</Link>}
       </Title>
 
       {isLogin && (
@@ -24,7 +29,8 @@ const Header = () => {
 
       {!isLogin && (
         <p>
-          <Link href={PATHS.LOGIN}>login</Link>
+          {isErrorBoundaryHeader && <a href={PATHS.LOGIN}>login</a>}
+          {!isErrorBoundaryHeader && <Link href={PATHS.LOGIN}>login</Link>}
         </p>
       )}
     </Container>

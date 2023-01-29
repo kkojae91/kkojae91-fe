@@ -4,3 +4,7 @@ export const PATHS = {
   HOME: '/',
   LOGIN: '/login',
 } as const;
+
+export const PARAMETERS = {
+  PAGE: 'page',
+} as const;

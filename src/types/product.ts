@@ -5,6 +5,12 @@ export type Product = {
   price: number;
 };
 
-export type Products = {
+export type ProductsResponse = {
   data: { products: Product[]; totalCount: number };
+};
+
+export type ProductDetailResponse = {
+  data: {
+    product: Product;
+  };
 };

@@ -4,6 +4,7 @@ import { RecoilRoot } from 'recoil';
 import styled from 'styled-components';
 
 import setupMSW from '../api/setup';
+import ErrorBoundary from '../components/common/ErrorBoundary';
 import Header from '../components/layout/Header';
 import GlobalStyle from '../styles/GlobalStyle';
 
@@ -14,6 +15,10 @@ const queryClient = new QueryClient({
     queries: {
       retry: false,
       refetchOnWindowFocus: false,
+      useErrorBoundary: true,
+    },
+    mutations: {
+      retry: false,
     },
   },
 });
@@ -26,10 +31,12 @@ function MyApp({ Component, pageProps }: AppProps) {
 
       <QueryClientProvider client={queryClient}>
         <RecoilRoot>
-          <Content>
-            <Header />
-            <Component {...pageProps} />
-          </Content>
+          <ErrorBoundary>
+            <Content>
+              <Header />
+              <Component {...pageProps} />
+            </Content>
+          </ErrorBoundary>
         </RecoilRoot>
       </QueryClientProvider>
     </>
@@ -46,7 +53,7 @@ const Background = styled.div`
   background-color: #f0f0f5;
 `;
 
-const Content = styled.div`
+export const Content = styled.div`
   width: 420px;
   min-height: 100%;
   margin: 0 auto;

@@ -3,29 +3,15 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import styled from 'styled-components';
 
-import ExceptionError from '../../components/common/ExceptionError';
 import ProductDetailSkeleton from '../../components/loading/ProductDetailSkeleton';
-import { ERROR_MESSAGES, REDIRECT_TEXT } from '../../constants/message';
-import { PATHS } from '../../constants/path';
 import useGetProductDetail from '../../hooks/queries/useGetProductDetail';
 
 const ProductDetailPage: NextPage = () => {
   const router = useRouter();
   const { id } = router.query;
-  const { data, isLoading, isError } = useGetProductDetail({ id: Number(id ?? 1) });
+  const { data, isLoading } = useGetProductDetail({ id: Number(id ?? 1) });
 
   const product = data?.data.product;
-
-  if (isError) {
-    return (
-      <ExceptionError
-        title={ERROR_MESSAGES.NOT_FOUND_PAGE}
-        description={REDIRECT_TEXT.TO_HOME}
-        buttonText='홈으로 가기'
-        path={PATHS.HOME}
-      />
-    );
-  }
 
   if (isLoading) {
     return <ProductDetailSkeleton />;

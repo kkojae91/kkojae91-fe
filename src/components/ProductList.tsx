@@ -10,14 +10,16 @@ type ProductListProps = {
 const ProductList = ({ products }: ProductListProps) => (
   <Container>
     {products.map((product) => (
-      <ProductItem key={product.id} product={product} />
+      <li key={product.id}>
+        <ProductItem product={product} />
+      </li>
     ))}
   </Container>
 );
 
 export default ProductList;
 
-const Container = styled.div`
+export const Container = styled.ul`
   display: flex;
   flex-wrap: wrap;
   width: 400px;

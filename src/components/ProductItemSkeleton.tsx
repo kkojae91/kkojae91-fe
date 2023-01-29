@@ -1,5 +1,7 @@
 import React from 'react';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
+
+import { skeletonAnimation } from '../styles/animation';
 
 const ProductItemSkeleton = () => {
   return (
@@ -13,18 +15,6 @@ const ProductItemSkeleton = () => {
 
 export default ProductItemSkeleton;
 
-const refresh = keyframes`
-  0% {
-    background-color: rgba(242, 243, 247, 1);
-  }
-  50% {
-    background-color: rgba(242, 243, 247, 0.5);
-  }
-  100% {
-    background-color: rgba(242, 243, 247, 1);
-  }
-`;
-
 const Container = styled.section`
   width: 180px;
   margin-left: 20px;
@@ -35,7 +25,7 @@ const ThumbnailSkeleton = styled.div`
   width: 100%;
   height: 180px;
 
-  animation: ${refresh} 1.2s infinite ease-out;
+  ${skeletonAnimation}
 `;
 
 const NameSkeleton = styled.div`
@@ -44,7 +34,7 @@ const NameSkeleton = styled.div`
   width: 70%;
   height: 19.5px;
 
-  animation: ${refresh} 1.2s infinite ease-out;
+  ${skeletonAnimation}
 `;
 
 const PriceSkeleton = styled.div`
@@ -52,5 +42,5 @@ const PriceSkeleton = styled.div`
   height: 19.5px;
   margin-top: 4px;
 
-  animation: ${refresh} 1.2s infinite ease-out;
+  ${skeletonAnimation}
 `;

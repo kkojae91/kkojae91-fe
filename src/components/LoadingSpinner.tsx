@@ -1,4 +1,6 @@
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
+
+import { loadingSpinnerAnimation } from '../styles/animation';
 
 const LoadingSpinner = () => {
   return (
@@ -17,15 +19,6 @@ const LoadingSpinner = () => {
 
 export default LoadingSpinner;
 
-const animation = keyframes`
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-`;
-
 const Container = styled.div`
   display: inline-block;
 
@@ -37,7 +30,7 @@ const Container = styled.div`
 `;
 
 const Box = styled.div`
-  animation: ${animation} 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  ${loadingSpinnerAnimation}
   transform-origin: 40px 40px;
 
   &:after {

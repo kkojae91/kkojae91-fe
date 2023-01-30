@@ -24,9 +24,11 @@ const Container = styled.div`
 
   width: 80px;
   height: 80px;
-  margin: 0 auto;
 
-  position: relative;
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `;
 
 const Box = styled.div`

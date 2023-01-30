@@ -1,19 +1,46 @@
 import type { AppProps } from 'next/app';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { RecoilRoot } from 'recoil';
 import styled from 'styled-components';
 
 import setupMSW from '../api/setup';
+import ErrorBoundary from '../components/common/ErrorBoundary';
+import Snackbar from '../components/common/Snackbar';
+import Header from '../components/layout/Header';
 import GlobalStyle from '../styles/GlobalStyle';
 
 setupMSW();
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+      refetchOnWindowFocus: false,
+      useErrorBoundary: true,
+    },
+    mutations: {
+      retry: false,
+    },
+  },
+});
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <GlobalStyle />
       <Background />
-      <Content>
-        <Component {...pageProps} />
-      </Content>
+
+      <QueryClientProvider client={queryClient}>
+        <RecoilRoot>
+          <ErrorBoundary>
+            <Content>
+              <Header />
+              <Component {...pageProps} />
+              <Snackbar />
+            </Content>
+          </ErrorBoundary>
+        </RecoilRoot>
+      </QueryClientProvider>
     </>
   );
 }
@@ -28,7 +55,7 @@ const Background = styled.div`
   background-color: #f0f0f5;
 `;
 
-const Content = styled.div`
+export const Content = styled.div`
   width: 420px;
   min-height: 100%;
   margin: 0 auto;

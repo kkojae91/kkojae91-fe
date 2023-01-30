@@ -1,52 +1,75 @@
-import Link from 'next/link';
 import type { NextPage } from 'next';
 import React from 'react';
 import styled from 'styled-components';
 
+import withLogin from '../components/helper/withLogin';
+import Input from '../components/common/Input';
+import LoadingSpinner from '../components/loading/LoadingSpinner';
+import useControlledForm from '../hooks/useControlledForm';
+import useSetAuthorization from '../hooks/useSetAuthorization';
+import usePostLogin from '../hooks/queries/usePostLogin';
+import { ValuesType } from '../types/login';
+import { loginValidator } from '../utilities/validate';
+
 const LoginPage: NextPage = () => {
+  const { setLoginInfo } = useSetAuthorization();
+  const { mutate: login, isLoading } = usePostLogin({ setLoginInfo });
+  const { errorMessages, handleSubmit, touched, getProps } = useControlledForm<ValuesType>({
+    initialValues: { id: '', password: '' },
+    validate: loginValidator,
+    onSubmit: (values: ValuesType) => {
+      login(values);
+    },
+  });
+
   return (
-    <>
-      <Header>
-        <Link href='/'>
-          <Title>HAUS</Title>
-        </Link>
-        <Link href='/login'>
-          <p>login</p>
-        </Link>
-      </Header>
-      <Form>
-        <div>아이디</div>
-        <TextInput type='text' />
-        <div>비밀번호</div>
-        <TextInput type='password' />
-        <LoginButton disabled>로그인</LoginButton>
+    <Container>
+      <Form onSubmit={handleSubmit}>
+        {isLoading && <LoadingSpinner />}
+
+        <InputContainer>
+          <Input
+            id='id'
+            type='text'
+            labelText='아이디'
+            isInvalid={touched.id && errorMessages.id.length !== 0}
+            errorMessage={errorMessages.id}
+            getProps={getProps}
+          />
+
+          <Input
+            id='password'
+            type='password'
+            labelText='비밀번호'
+            isInvalid={touched.password && errorMessages.password.length !== 0}
+            errorMessage={errorMessages.password}
+            getProps={getProps}
+          />
+        </InputContainer>
+
+        <LoginButton type='submit' disabled={Object.values(errorMessages).some((value) => value)}>
+          로그인
+        </LoginButton>
       </Form>
-    </>
+    </Container>
   );
 };
 
-export default LoginPage;
+export default withLogin(LoginPage, false);
 
-const Header = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px;
-`;
+const Container = styled.article``;
 
-const Title = styled.a`
-  font-size: 48px;
-`;
-
-const Form = styled.div`
+const Form = styled.form`
   display: flex;
   flex-direction: column;
   margin-top: 40px;
   padding: 0 20px 40px;
 `;
 
-const TextInput = styled.input`
-  border: 1px solid #000;
+const InputContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 `;
 
 const LoginButton = styled.button`

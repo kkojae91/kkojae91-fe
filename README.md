@@ -49,3 +49,56 @@
 - [x] 상품 상세 조회 API를 이용해서 id에 해당하는 상품을 보여주세요.
 - [x] 상품 가격은 세 자리마다 콤마(,)로 구분해주세요.
 - [x] 존재하지 않는 상품에 접근 시 에러 처리를 합니다.
+
+# 추가 구현 사항 및 리팩터링 사항
+
+### Loading시 Skeleton UI 및 Loading spinner 구현
+
+- Loading 중 일 경우 화면에 변화가 없는 것 보다 좋은 사용자 경험을 제공하기 위해 Skeleton UI와 LoadingSpinner를 구현해 상황에 맞게 사용할 수 있도록 구현했습니다.
+- 로그인시 LoadingSpinner 사용
+- product, products fetching시 Skeleton UI 사용
+
+### Header 분리
+
+- 모든 페이지에서 사용하고 있는 header를 Header component로 분리하여 layout을 보다 쉽게 관리할 수 있도록 했습니다.
+
+### AccessToken을 localStorage에 보관한 이유
+
+- AccessToken의 expire 기간이 정해지지 않았기 때문에 정보가 비휘발되는 localStorage를 통해 AccessToken, userName을 보관할 수 있도록 구현했습니다.
+- 만약 expire 기간이 정해진다면, cookie를 사용해 expire 기간을 설정해 AccessToken을 보관하고 expire 기간이 종료 되면 자동으로 로그아웃 될 수 있도록 구현을 할 것 같습니다.
+
+### Error 처리
+
+#### 1. queries의 useErrorBoundary를 true로 설정해 useQuery 사용시 발생하는 error를 errorBoundary에서 처리할 수 있도록 구현했습니다.
+
+- 이렇게 구현한 이유는 exception error와 product, products를 fetching 하는 과정에 발생하는 error를 errorBoundary로 응집시켜 처리할 수 있겠다는 생각을 했기 때문입니다.
+- 또한 errorBoundary에서 errorMessage로 분기 처리해 에러가 발생할 경우 fallback UI를 제공함으로써 사용자에게는 보다 좋은 경험을 개발자는 error 처리를 보다 간편하게 처리할 수 있지 않을까? 라는 생각을 했기 때문입니다.
+
+#### 2. mutation시 발생하는 에러를 ErrorBoundary에서 fallback UI를 사용하는게 아닌 snackbar를 이용해 사용자에게 메시지를 전달할 수 있도록 구현했습니다.
+
+- 이렇게 구현한 이유는 mutation시 발생하는 에러의 경우 fallback UI를 제공하는 것 보다는 현재 보여지는 페이지에서 사용자에게 메시지를 간편하게 전달하는게 사용자 경험 측면에서 더 좋다는 생각을 했습니다.
+- 또한 mutation시 에러 뿐만 아니라 성공했을 경우 역시 사용자에게 메시지를 전달하는 것이 사용자 경험 측면에서 더 좋다는 생각이 들어 mutation의 onError, onSuccess에서 snackbar message를 전달하여 사용자에게 요청한 상태를 사용자에게 전달할 수 있도록 구현했습니다.
+
+### ValueOf, StrictPropsWithChildren 유틸 타입 생성
+
+#### 1. ValueOf 유틸 타입을 생성한 이유
+
+- 타입스크립트의 유틸 타입에는 keyof는 존재하지만 valueof는 존재하지 않아 객체의 value값을 type으로 만들어 줄 수 있는 ValueOf 유틸 타입을 생성해 객체의 값을 쉽게 타입으로 변환할 수 있도록 구현했습니다.
+
+```ts
+export type ValueOf<T> = T[keyof T];
+```
+
+#### 2. StrickPropsWithChildren 유틸 타입을 생성한 이유
+
+- React에서 기본으로 제공해주는 유틸 타입인 PropsWithChildren의 children 타입이 optional이기 때문에 보다 안전하게 children을 받을 수 있도록 StrictPropsWithChildren 유틸 타입을 생성해 사용했습니다.
+
+```ts
+// 리액트에서 제공해주는 util type
+type PropsWithChildren<P = unknown> = P & { children?: ReactNode | undefined };
+
+// 새롭게 만든 util type
+type StrictPropsWithChildren<P = unknown> = P & {
+  children: ReactNode;
+};
+```

@@ -1,6 +1,6 @@
 import { css, keyframes } from 'styled-components';
 
-const skeletonKeyFrames = keyframes`
+const skeletonKeyframes = keyframes`
   0% {
     background-color: rgba(242, 243, 247, 1);
   }
@@ -13,10 +13,10 @@ const skeletonKeyFrames = keyframes`
 `;
 
 export const skeletonAnimation = css`
-  animation: ${skeletonKeyFrames} 1.2s infinite ease-out;
+  animation: ${skeletonKeyframes} 1.2s infinite ease-out;
 `;
 
-const loadingSpinnerKeyFrames = keyframes`
+const loadingSpinnerKeyframes = keyframes`
   0% {
     transform: rotate(0deg);
   }
@@ -26,5 +26,21 @@ const loadingSpinnerKeyFrames = keyframes`
 `;
 
 export const loadingSpinnerAnimation = css`
-  animation: ${loadingSpinnerKeyFrames} 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  animation: ${loadingSpinnerKeyframes} 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+`;
+
+const snackbarKeyframes = keyframes`
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+`;
+
+export const snackbarAnimation = css`
+  animation: ${snackbarKeyframes} 3s ease-in-out;
 `;

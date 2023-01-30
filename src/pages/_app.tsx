@@ -5,6 +5,7 @@ import styled from 'styled-components';
 
 import setupMSW from '../api/setup';
 import ErrorBoundary from '../components/common/ErrorBoundary';
+import Snackbar from '../components/common/Snackbar';
 import Header from '../components/layout/Header';
 import GlobalStyle from '../styles/GlobalStyle';
 
@@ -35,6 +36,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             <Content>
               <Header />
               <Component {...pageProps} />
+              <Snackbar />
             </Content>
           </ErrorBoundary>
         </RecoilRoot>

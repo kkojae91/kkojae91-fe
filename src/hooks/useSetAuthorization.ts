@@ -5,6 +5,8 @@ import { useRecoilState } from 'recoil';
 import { loginState } from '../atoms/login';
 import { PATHS } from '../constants/path';
 import { STORAGE_KEYS } from '../constants/key';
+import useSnackbar from './useSnackbar';
+import { SUCCESS_MESSAGES } from '../constants/message';
 
 type UseSetAuthorizationReturnType = {
   isLogin: boolean;
@@ -16,6 +18,7 @@ type UseSetAuthorizationReturnType = {
 const useSetAuthorization = (): UseSetAuthorizationReturnType => {
   const router = useRouter();
   const [{ userName, isLogin }, setLoginState] = useRecoilState(loginState);
+  const { openSuccessSnackbar } = useSnackbar();
 
   const setLoginInfo = ({ accessToken, userName }: { accessToken: string; userName: string }) => {
     localStorage.setItem(STORAGE_KEYS.ACCESS_TOKEN, accessToken);
@@ -34,6 +37,8 @@ const useSetAuthorization = (): UseSetAuthorizationReturnType => {
       userName,
       isLogin: false,
     });
+
+    openSuccessSnackbar(SUCCESS_MESSAGES.LOGOUT);
 
     router.push(PATHS.HOME);
   };

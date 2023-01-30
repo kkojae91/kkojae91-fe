@@ -5,18 +5,15 @@ import styled from 'styled-components';
 import withLogin from '../components/helper/withLogin';
 import Input from '../components/common/Input';
 import LoadingSpinner from '../components/loading/LoadingSpinner';
-import ExceptionError from '../components/common/ExceptionError';
 import useControlledForm from '../hooks/useControlledForm';
 import useSetAuthorization from '../hooks/useSetAuthorization';
 import usePostLogin from '../hooks/queries/usePostLogin';
 import { ValuesType } from '../types/login';
 import { loginValidator } from '../utilities/validate';
-import { PATHS } from '../constants/path';
-import { ERROR_MESSAGES, REDIRECT_TEXT } from '../constants/message';
 
 const LoginPage: NextPage = () => {
   const { setLoginInfo } = useSetAuthorization();
-  const { mutate: login, isLoading, isError } = usePostLogin({ setLoginInfo });
+  const { mutate: login, isLoading } = usePostLogin({ setLoginInfo });
   const { errorMessages, handleSubmit, touched, getProps } = useControlledForm<ValuesType>({
     initialValues: { id: '', password: '' },
     validate: loginValidator,
@@ -24,17 +21,6 @@ const LoginPage: NextPage = () => {
       login(values);
     },
   });
-
-  if (isError) {
-    return (
-      <ExceptionError
-        title={ERROR_MESSAGES.NOT_FOUND_USER}
-        description={REDIRECT_TEXT.TO_LOGIN}
-        buttonText='로그인 하러가기'
-        path={PATHS.LOGIN}
-      />
-    );
-  }
 
   return (
     <Container>

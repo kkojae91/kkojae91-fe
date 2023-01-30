@@ -6,6 +6,11 @@ export const ERROR_MESSAGES = {
   EXCEPTION: '예상치 못한 에러가 발생했습니다.',
 } as const;
 
+export const SUCCESS_MESSAGES = {
+  LOGIN: '정상적으로 로그인 되었습니다.',
+  LOGOUT: '정상적으로 로그아웃 되었습니다.',
+} as const;
+
 export const REDIRECT_TEXT = {
   TO_HOME: '홈으로 돌아가시려면 아래 버튼을 클릭해주세요.',
   TO_LOGIN: '다시 로그인하시려면 아래 버튼을 클릭해주세요.',
